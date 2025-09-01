@@ -3,12 +3,13 @@ import { useState } from "react";
 import { data, Link, useNavigate } from "react-router-dom";
 import { signInstart, signInFailure, signInSuccess } from "../redux/user/userSlice";
 import { useDispatch, useSelector } from "react-redux";
+import OAuth from "../components/OAuth";
 
 
 const SignIn = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const {loading, error:errorMessage} = useSelector(state => state.user);
+  const {loading, error:errorMessage} = useSelector((state) => state.user);
   
   const [formData, setFormData] = useState({});
   
@@ -23,7 +24,7 @@ const SignIn = () => {
       return dispatch(signInFailure('please fill out all fields!!'))
     }
     try {
-      dispatch(signInstart);
+      dispatch(signInstart());
       const res = await fetch("/api/auth/signin", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -127,6 +128,7 @@ const SignIn = () => {
                 ) : 'Sign In'
               }
             </Button>
+            <OAuth />
           </form>
 
           <div className="flex gap-2 text-sm mt-5 justify-center">
